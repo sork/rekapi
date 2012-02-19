@@ -160,7 +160,7 @@ canvas {
     #tween-controls li {
       display: block;
       font-size: 1.4em;
-      margin-bottom: 6px;
+      padding-bottom: 6px;
     }
 
     #tween-controls label {
@@ -170,6 +170,16 @@ canvas {
     #tween-controls select {
       background: transparent;
       font-size: 0.8em;
+    }
+
+    #tween-controls hr {
+      margin: 14px 0 20px;
+      width: 274px;
+    }
+
+    #tween-controls .buttons {
+      padding: 6px 0;
+      text-align: left;
     }
 
 #tweenbox {
