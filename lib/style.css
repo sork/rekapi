@@ -1,4 +1,3 @@
-
 #fork-me-link {
   left: 0px;
   position: absolute;
@@ -94,6 +93,10 @@ canvas {
 
 #sandbox {
   float: left;
+}
+
+#tweenbox {
+
 }
 
 #editor-wrapper {
