@@ -97,10 +97,16 @@ canvas {
 
 #crosshairs {
   height: 400px;
+  float: left;
   margin: 0 auto;
   position: relative;
   width: 500px;
 }
+
+  #crosshairs canvas {
+    float: left;
+    margin: 0 0;
+  }
 
   #crosshairs .crosshair {
     cursor: move;
@@ -142,6 +148,23 @@ canvas {
     .crosshair .dashmark.vert {
       height: 100%;
       left: 19px;
+    }
+
+  #tween-controls {
+    float: left;
+    padding: 12px;
+  }
+
+    #tween-controls li {
+      display: block;
+    }
+
+    #tween-controls label {
+      font-size: 1.4em;
+    }
+
+    #tween-controls select {
+
     }
 
 #tweenbox {
