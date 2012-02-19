@@ -8,7 +8,6 @@
   <script src="dist/rekapi.bundle.min.js"></script>
   <script src="lib/jquery.js"></script>
   <script src="lib/jquery-ui-custom.min.js"></script>
-  <script src="lib/kinetic.js"></script>
   <script src="lib/tweens.js"></script>
 </head>
 <body>
@@ -21,6 +20,14 @@
     </p>
     <div id="crosshairs">
       <canvas></canvas>
+      <div class="crosshair from">
+        <div class="dashmark horiz"></div>
+        <div class="dashmark vert"></div>
+      </div>
+      <div class="crosshair to">
+        <div class="dashmark horiz"></div>
+        <div class="dashmark vert"></div>
+      </div>
     </div>
     <a id="fork-me-link" href="https://github.com/jeremyckahn/rekapi/"><img src="demo/img/forkme.png" alt="Fork me!" /></a>
     <footer>Rekapi is free and open source software, obsessively made by <a href="http://www.jeremyckahn.com" target="_blank">Jeremy Kahn</a>.</footer>
