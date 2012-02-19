@@ -152,19 +152,24 @@ canvas {
 
   #tween-controls {
     float: left;
+    list-style-type: none;
+    margin: 0;
     padding: 12px;
   }
 
     #tween-controls li {
       display: block;
+      font-size: 1.4em;
+      margin-bottom: 6px;
     }
 
     #tween-controls label {
-      font-size: 1.4em;
+      padding-right: 6px;
     }
 
     #tween-controls select {
-
+      background: transparent;
+      font-size: 0.8em;
     }
 
 #tweenbox {
