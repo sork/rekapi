@@ -95,6 +95,13 @@ canvas {
   float: left;
 }
 
+#crosshairs {
+  height: 400px;
+  margin: 0 auto;
+  position: relative;
+  width: 500px;
+}
+
 #tweenbox {
 
 }
