@@ -23,7 +23,7 @@
     <script>
 
       var animation = new Rekapi(document.getElementById('tester-container'), {
-        'fps': 20
+        'fps': 60
       });
       var actor = new Rekapi.DOMActor(document.getElementById('tester'));
       animation.addActor(actor);
@@ -39,7 +39,8 @@
           'left': 'easeInCirc'
         });
 
-      animation.play();
+     // animation.play();
+     console.log(animation.toCSS());
 
     </script>
   </body>
