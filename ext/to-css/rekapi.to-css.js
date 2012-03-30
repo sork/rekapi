@@ -34,10 +34,12 @@
     var i = 0;
     var granularity = opts.granularity || DEFAULT_GRANULARITY;
     var serializedFrames = [];
+    var percent;
 
     for (i; i <= animLength; i += animLength / granularity) {
       this.calculatePosition(i);
-      serializedFrames.push(serializeActorState(this));
+      percent = ((i * granularity) / animLength);
+      serializedFrames.push(percent + '% ' + serializeActorState(this));
     }
 
     console.log(serializedFrames.join('\n'));
