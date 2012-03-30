@@ -1,27 +1,46 @@
 ;(function (Rekapi, Mustache, global) {
 
+  // CONSTANTS
+  var DEFAULT_GRANULARITY = 100;
+
+
+  // TEMPLATES
   var KEYFRAME_TEMPLATE = [].join();
+
 
   function serializeActorState (actor) {
     var serializedProps = ['{'];
     _.each(actor.get(), function (val, key) {
-      serializedProps.push(key + ': ' + val + ';');
+      serializedProps.push(key + ':' + val + ';');
     });
 
     serializedProps.push('}');
     return serializedProps.join('');
   };
 
+
   Rekapi.prototype.toCSS = function (opts) {
     var actorIds = this.getActorIds();
 
-    var serializedFrame = [];
-
     _.each(actorIds, function (id) {
-      serializedFrame.push(serializeActorState(this.getActor(id)));
+      this.getActor(id).toCSS();
     }, this);
+  };
 
-    console.log(serializedFrame.join('\n'));
+
+  Rekapi.Actor.prototype.toCSS = function (opts) {
+    opts = opts || {};
+    var animLength = this.kapi.animationLength();
+    var i = 0;
+    var granularity = opts.granularity || DEFAULT_GRANULARITY;
+    var serializedFrames = [];
+
+    for (i; i <= animLength; i += animLength / granularity) {
+      this.calculatePosition(i);
+      serializedFrames.push(serializeActorState(this));
+    }
+
+    console.log(serializedFrames.join('\n'));
   };
 
 } (this.Rekapi, this.Mustache, this));
