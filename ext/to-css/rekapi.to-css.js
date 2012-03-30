@@ -13,10 +13,15 @@
   };
 
   Rekapi.prototype.toCSS = function (opts) {
-    //var timeline = this.exportTimeline();
     var actorIds = this.getActorIds();
-    var serialized = serializeActorState(this.getActor(actorIds[0]));
-    console.log(serialized);
+
+    var serializedFrame = [];
+
+    _.each(actorIds, function (id) {
+      serializedFrame.push(serializeActorState(this.getActor(id)));
+    }, this);
+
+    console.log(serializedFrame.join('\n'));
   };
 
 } (this.Rekapi, this.Mustache, this));
