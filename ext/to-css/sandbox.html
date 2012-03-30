@@ -6,6 +6,9 @@
     <script src="lib/mustache.js"></script>
     <script src="rekapi.to-css.js"></script>
     <style type="text/css">
+      .container {
+        position: relative;
+      }
       #tester {
         background: #f00;
         height: 100px;
@@ -14,6 +17,30 @@
     </style>
   </head>
   <body>
-    <div id="tester"></div>
+    <div id="tester-container" class="container">
+      <div id="tester"></div>
+    </div>
+    <script>
+
+      var animation = new Rekapi(document.getElementById('tester-container'), {
+        'fps': 20
+      });
+      var actor = new Rekapi.DOMActor(document.getElementById('tester'));
+      animation.addActor(actor);
+
+      actor
+        .keyframe(0, {
+          'top': '0px'
+          ,'left': '0px'
+        }).keyframe(1500, {
+          'top': '200px'
+          ,'left': '200px'
+        }, {
+          'left': 'easeInCirc'
+        });
+
+      animation.play();
+
+    </script>
   </body>
 </html>
