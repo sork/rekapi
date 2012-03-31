@@ -71,6 +71,7 @@
   /**
    * @param {Rekapi.Actor} actor
    * @param {number} granularity
+   * @return {string}
    */
   function generateActorKeyframes (actor, granularity) {
     var animLength = actor.kapi.animationLength();
@@ -95,14 +96,32 @@
   }
 
 
-  function applyVendorBoilerplate (vendors, toKeyframes) {
+  /**
+   * @param {string} toKeyframes Generated keyframes to wrap in boilerplates
+   * @param {string} animName
+   * @param {[string]} opt_vendors Vendor boilerplates to be applied.  Should be
+   *     any of the values in Rekapi.util.VENDOR_PREFIXES.
+   * @return {string}
+   */
+  function applyVendorBoilerplates (toKeyframes, animName, opt_vendors) {
+    opt_vendors = opt_vendors || [''];
+    var renderedKeyframes = [];
 
+    _.each(opt_vendors, function (vendor) {
+      var renderedChunk = printf(KEYFRAME_TEMPLATE,
+          [VENDOR_PREFIXES[vendor], animName, toKeyframes]);
+
+      renderedKeyframes.push(renderedChunk);
+    });
+
+    return renderedKeyframes.join('\n');
   }
 
 
   /**
    * @param {string} formatter
    * @param {[string]} args
+   * @return {string}
    */
   var printf = Rekapi.util.printf = function (formatter, args) {
     var composedStr = formatter;
