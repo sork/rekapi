@@ -45,11 +45,14 @@
    */
   Rekapi.prototype.toCSS = function (opts) {
     opts = opts || {};
+    var animationCSS = [];
     var actorIds = this.getActorIds();
 
     _.each(actorIds, function (id) {
-      this.getActor(id).toCSS(opts);
+      animationCSS.push(this.getActor(id).toCSS(opts));
     }, this);
+
+    return animationCSS.join('\n');
   };
 
 
@@ -58,11 +61,16 @@
    */
   Rekapi.Actor.prototype.toCSS = function (opts) {
     opts = opts || {};
+    var actorCSS = [];
     var granularity = opts.granularity || DEFAULT_GRANULARITY;
+    var actorClass = generateCSSClass(this, opts.vendors);
+    actorCSS.push(actorClass);
     var keyframes = generateActorKeyframes(this, granularity);
     var boilerplatedKeyframes = applyVendorBoilerplates(
-        keyframes, 'actor-' + this.id, opts.vendors);
-    console.log(boilerplatedKeyframes);
+        keyframes, getAnimationName(this), opts.vendors);
+    actorCSS.push(boilerplatedKeyframes);
+
+    return actorCSS.join('\n');
   };
 
 
@@ -132,13 +140,55 @@
   }
 
 
-  function generateCSSClass (actor, vendors) {
+  /**
+   * @param {Rekapi.Actor} actor
+   * @param {[string]} opt_vendors
+   */
+  function generateCSSClass (actor, opt_vendors) {
+    opt_vendors = opt_vendors || ['w3'];
+    var classAttrs = [];
+    var vendorAttrs;
 
+    _.each(opt_vendors, function (vendor) {
+      vendorAttrs = generateCSSVendorAttributes(actor, vendor);
+      classAttrs.push(vendorAttrs);
+    });
+
+    var boilerplatedClass = printf(CLASS_BOILERPLATE
+        ,[getAnimationName(actor), classAttrs.join('\n')]);
+
+    return boilerplatedClass;
   }
 
 
+  /**
+   * @param {Rekapi.Actor} actor
+   * @param {string} vendor
+   */
   function generateCSSVendorAttributes (actor, vendor) {
+    var generatedAttributes = [];
+    var startTime = actor.getStart();
+    var endTime = actor.getEnd();
+    var duration = endTime - startTime;
 
+    var duration = printf('  %sanimation-duration: %sms;'
+        ,[VENDOR_PREFIXES[vendor], duration]);
+    generatedAttributes.push(duration);
+
+    var animationName = printf('  %sanimation-name: %s;'
+        ,[VENDOR_PREFIXES[vendor], getAnimationName(actor) + '-keyframes']);
+    generatedAttributes.push(animationName);
+
+    return generatedAttributes.join('\n');
+  }
+
+
+  /**
+   * @param {Rekapi.Actor} actor
+   * @return {string}
+   */
+  function getAnimationName (actor) {
+    return 'actor-' + actor.id;
   }
 
 
