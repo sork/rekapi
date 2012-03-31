@@ -27,6 +27,11 @@
   ].join('\n');
 
 
+  // PROTOTYPE EXTENSIONS
+  //
+  /**
+   * @param {Object} opts
+   */
   Rekapi.prototype.toCSS = function (opts) {
     var actorIds = this.getActorIds();
 
@@ -36,6 +41,9 @@
   };
 
 
+  /**
+   * @param {Object} opts
+   */
   Rekapi.Actor.prototype.toCSS = function (opts) {
     opts = opts || {};
     var granularity = opts.granularity || DEFAULT_GRANULARITY;
@@ -46,6 +54,9 @@
 
   // UTILITY FUNCTIONS
   //
+  /**
+   * @param {Rekapi.Actor} actor
+   */
   function serializeActorStep (actor) {
     var serializedProps = ['{'];
     _.each(actor.get(), function (val, key) {
@@ -57,22 +68,42 @@
   };
 
 
+  /**
+   * @param {Rekapi.Actor} actor
+   * @param {number} granularity
+   */
   function generateActorKeyframes (actor, granularity) {
     var animLength = actor.kapi.animationLength();
     var i = 0;
     var serializedFrames = [];
-    var percent;
+    var percent, stepPrefix;
 
     for (i; i <= animLength; i += animLength / granularity) {
       actor.calculatePosition(i);
       percent = ((i * granularity) / animLength);
-      serializedFrames.push(percent + '% ' + serializeActorStep(actor));
+      if (percent === 0) {
+        stepPrefix = 'from ';
+      } else if (percent === 100) {
+        stepPrefix = 'to ';
+      } else {
+        stepPrefix = percent + '% ';
+      }
+      serializedFrames.push(stepPrefix + serializeActorStep(actor));
     }
 
     return serializedFrames.join('\n');
   }
 
 
+  function applyVendorBoilerplate (vendors, toKeyframes) {
+
+  }
+
+
+  /**
+   * @param {string} formatter
+   * @param {[string]} args
+   */
   var printf = Rekapi.util.printf = function (formatter, args) {
     var composedStr = formatter;
     _.each(args, function (arg) {
