@@ -3,6 +3,13 @@
   // CONSTANTS
   //
   var DEFAULT_GRANULARITY = 100;
+  var VENDOR_PREFIXES = Rekapi.util.VENDOR_PREFIXES = {
+    'microsoft': '-ms-'
+    ,'mozilla': '-moz-'
+    ,'opera': '-o-'
+    ,'w3': ''
+    ,'webkit': '-webkit-'
+  };
 
 
   // TEMPLATES
