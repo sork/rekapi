@@ -32,6 +32,7 @@
    */
   var CLASS_BOILERPLATE = [
     '.%s {'
+    ,'  position: absolute;'
     ,'%s'
     ,'}'
   ].join('\n');
@@ -131,7 +132,12 @@
   }
 
 
-  function generateCSSClass function (actor, vendors) {
+  function generateCSSClass (actor, vendors) {
+
+  }
+
+
+  function generateCSSVendorAttributes (actor, vendor) {
 
   }
 
