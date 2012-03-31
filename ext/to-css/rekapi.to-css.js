@@ -33,10 +33,11 @@
    * @param {Object} opts
    */
   Rekapi.prototype.toCSS = function (opts) {
+    opts = opts || {};
     var actorIds = this.getActorIds();
 
     _.each(actorIds, function (id) {
-      this.getActor(id).toCSS();
+      this.getActor(id).toCSS(opts);
     }, this);
   };
 
@@ -48,7 +49,9 @@
     opts = opts || {};
     var granularity = opts.granularity || DEFAULT_GRANULARITY;
     var keyframes = generateActorKeyframes(this, granularity);
-    console.log(keyframes);
+    var boilerplatedKeyframes = applyVendorBoilerplates(
+        keyframes, 'actor-' + this.id, opts.vendors);
+    console.log(boilerplatedKeyframes);
   };
 
 
@@ -89,7 +92,7 @@
       } else {
         stepPrefix = percent + '% ';
       }
-      serializedFrames.push(stepPrefix + serializeActorStep(actor));
+      serializedFrames.push('  ' + stepPrefix + serializeActorStep(actor));
     }
 
     return serializedFrames.join('\n');
@@ -104,7 +107,7 @@
    * @return {string}
    */
   function applyVendorBoilerplates (toKeyframes, animName, opt_vendors) {
-    opt_vendors = opt_vendors || [''];
+    opt_vendors = opt_vendors || ['w3'];
     var renderedKeyframes = [];
 
     _.each(opt_vendors, function (vendor) {
