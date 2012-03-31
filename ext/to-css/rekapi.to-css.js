@@ -1,4 +1,4 @@
-;(function (Rekapi, Mustache, global) {
+;(function (Rekapi, global) {
 
   // CONSTANTS
   //
@@ -22,6 +22,16 @@
    */
   var KEYFRAME_TEMPLATE = [
     '@%skeyframes %s-keyframes {'
+    ,'%s'
+    ,'}'
+  ].join('\n');
+
+  /**
+   * [0] class name
+   * [1] class attributes
+   */
+  var CLASS_BOILERPLATE = [
+    '.%s {'
     ,'%s'
     ,'}'
   ].join('\n');
@@ -121,6 +131,11 @@
   }
 
 
+  function generateCSSClass function (actor, vendors) {
+
+  }
+
+
   /**
    * @param {string} formatter
    * @param {[string]} args
@@ -135,4 +150,4 @@
     return composedStr;
   };
 
-} (this.Rekapi, this.Mustache, this));
+} (this.Rekapi, this));
