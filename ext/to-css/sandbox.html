@@ -42,7 +42,9 @@
      // animation.play();
      animation.render(0);
      console.log(animation);
-     console.log(animation.toCSS());
+     console.log(animation.toCSS({
+       'vendors': ['webkit', 'mozilla']
+     }));
 
     </script>
   </body>
