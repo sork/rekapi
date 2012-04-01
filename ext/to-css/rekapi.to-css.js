@@ -97,15 +97,16 @@
    */
   function generateActorKeyframes (actor, granularity) {
     var animLength = actor.getLength();
-    var i = 0;
+    var i = delay = actor.getStart();
     var serializedFrames = [];
     var percent, stepPrefix;
     var increment = animLength / granularity;
     var animPercent = animLength / 100;
 
-    for (i; i <= animLength; i += increment) {
+
+    for (i; i <= animLength + delay; i += increment) {
       actor.calculatePosition(i);
-      percent = i / animPercent;
+      percent = (i - delay) / animPercent;
       if (percent === 0) {
         stepPrefix = 'from ';
       } else if (percent === 100) {
@@ -169,15 +170,20 @@
    */
   function generateCSSVendorAttributes (actor, vendor) {
     var generatedAttributes = [];
-    var duration = actor.getLength();
+    var prefix = VENDOR_PREFIXES[vendor];
+    var start = actor.getStart();
+    var duration = actor.getEnd() - start;
 
     var duration = printf('  %sanimation-duration: %sms;'
-        ,[VENDOR_PREFIXES[vendor], duration]);
+        ,[prefix, duration]);
     generatedAttributes.push(duration);
 
     var animationName = printf('  %sanimation-name: %s;'
-        ,[VENDOR_PREFIXES[vendor], getAnimationName(actor) + '-keyframes']);
+        ,[prefix, getAnimationName(actor) + '-keyframes']);
     generatedAttributes.push(animationName);
+
+    var delay = printf('  %sanimation-delay: %sms;', [prefix, start]);
+    generatedAttributes.push(delay);
 
     return generatedAttributes.join('\n');
   }

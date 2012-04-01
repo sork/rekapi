@@ -17,25 +17,26 @@
   </head>
   <body>
     <div id="tester-container" class="container">
-      <div id="tester" class="actor-0"></div>
+      <div id="tester"></div>
     </div>
     <script>
 
       var animation = new Rekapi(document.getElementById('tester-container'), {
         'fps': 60
       });
-      var actor = new Rekapi.DOMActor(document.getElementById('tester'));
+      var testDiv = document.getElementById('tester');
+      var actor = new Rekapi.DOMActor(testDiv);
       animation.addActor(actor);
 
       actor
-        .keyframe(0, {
+        .keyframe(500, {
           'top': '0px'
           ,'left': '0px'
-        }).keyframe(2500, {
+        }).keyframe(3000, {
           'top': '400px'
           ,'left': '400px'
         }, {
-          'left': 'easeInQuart'
+          'left': 'easeInOutQuart'
           ,'top': 'swingTo'
         });
 
@@ -48,6 +49,7 @@
      var style = document.createElement('style');
      style.innerHTML = css;
      document.head.appendChild(style);
+     testDiv.classList.add('actor-0');
 
     </script>
   </body>
