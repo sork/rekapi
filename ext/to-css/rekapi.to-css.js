@@ -43,7 +43,7 @@
   /**
    * @param {Object} opts
    */
-  Rekapi.prototype.toCSS = function (opts) {
+  global.Kapi.prototype.toCSS = function (opts) {
     opts = opts || {};
     var animationCSS = [];
     var actorIds = this.getActorIds();
@@ -59,7 +59,7 @@
   /**
    * @param {Object} opts
    */
-  Rekapi.Actor.prototype.toCSS = function (opts) {
+  global.Kapi.Actor.prototype.toCSS = function (opts) {
     opts = opts || {};
     var actorCSS = [];
     var granularity = opts.granularity || DEFAULT_GRANULARITY;
@@ -67,10 +67,18 @@
     actorCSS.push(actorClass);
     var keyframes = generateActorKeyframes(this, granularity);
     var boilerplatedKeyframes = applyVendorBoilerplates(
-        keyframes, getAnimationName(this), opts.vendors);
+        keyframes, this.getCSSName(), opts.vendors);
     actorCSS.push(boilerplatedKeyframes);
 
     return actorCSS.join('\n');
+  };
+
+
+  /**
+   * @return {string}
+   */
+  global.Kapi.Actor.prototype.getCSSName = function () {
+    return 'actor-' + this.id;
   };
 
 
@@ -158,7 +166,7 @@
     });
 
     var boilerplatedClass = printf(CLASS_BOILERPLATE
-        ,[getAnimationName(actor), classAttrs.join('\n')]);
+        ,[actor.getCSSName(), classAttrs.join('\n')]);
 
     return boilerplatedClass;
   }
@@ -179,7 +187,7 @@
     generatedAttributes.push(duration);
 
     var animationName = printf('  %sanimation-name: %s;'
-        ,[prefix, getAnimationName(actor) + '-keyframes']);
+        ,[prefix, actor.getCSSName() + '-keyframes']);
     generatedAttributes.push(animationName);
 
     var delay = printf('  %sanimation-delay: %sms;', [prefix, start]);
@@ -189,15 +197,6 @@
     generatedAttributes.push(fillMode);
 
     return generatedAttributes.join('\n');
-  }
-
-
-  /**
-   * @param {Rekapi.Actor} actor
-   * @return {string}
-   */
-  function getAnimationName (actor) {
-    return 'actor-' + actor.id;
   }
 
 

@@ -8,7 +8,7 @@
       .container {
         position: relative;
       }
-      #tester {
+      #actor-1 {
         background: #f00;
         height: 100px;
         width: 100px;
@@ -16,16 +16,16 @@
     </style>
   </head>
   <body>
-    <div id="tester-container" class="container">
-      <div id="tester"></div>
+    <div id="animation-container" class="container">
+      <div id="actor-1"></div>
     </div>
     <script>
 
-      var animation = new Rekapi(document.getElementById('tester-container'), {
+      var animation = new Rekapi(document.getElementById('animation-container'), {
         'fps': 60
       });
-      var testDiv = document.getElementById('tester');
-      var actor = new Rekapi.DOMActor(testDiv);
+      var actorDiv = document.getElementById('actor-1');
+      var actor = new Rekapi.DOMActor(actorDiv);
       animation.addActor(actor);
 
       actor
@@ -49,7 +49,7 @@
      var style = document.createElement('style');
      style.innerHTML = css;
      document.head.appendChild(style);
-     testDiv.classList.add('actor-0');
+     actorDiv.classList.add(actor.getCSSName());
 
     </script>
   </body>
