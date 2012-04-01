@@ -82,7 +82,7 @@
   function serializeActorStep (actor) {
     var serializedProps = ['{'];
     _.each(actor.get(), function (val, key) {
-      serializedProps.push(key + ':' + val + ';');
+      serializedProps.push(key + ':' + limitCSSPrecision(val, 2) + ';');
     });
 
     serializedProps.push('}');
@@ -109,7 +109,7 @@
       } else if (percent === 100) {
         stepPrefix = 'to ';
       } else {
-        stepPrefix = percent + '% ';
+        stepPrefix = percent.toFixed(2) + '% ';
       }
       serializedFrames.push('  ' + stepPrefix + serializeActorStep(actor));
     }
@@ -205,5 +205,16 @@
 
     return composedStr;
   };
+
+
+  /**
+   * @param {string} cssVal
+   * @param {number} precision
+   */
+  function limitCSSPrecision (cssVal, precision) {
+    var unit = cssVal.match(/\D*$/);
+    var val = parseFloat(cssVal);
+    return val.toFixed(precision) + unit;
+  }
 
 } (this.Rekapi, this));
