@@ -17,7 +17,7 @@
   </head>
   <body>
     <div id="tester-container" class="container">
-      <div id="tester"></div>
+      <div id="tester" class="actor-0"></div>
     </div>
     <script>
 
@@ -31,19 +31,23 @@
         .keyframe(0, {
           'top': '0px'
           ,'left': '0px'
-        }).keyframe(1500, {
-          'top': '200px'
-          ,'left': '200px'
+        }).keyframe(2500, {
+          'top': '400px'
+          ,'left': '400px'
         }, {
-          'left': 'easeInCirc'
+          'left': 'easeInQuart'
+          ,'top': 'swingTo'
         });
 
-     // animation.play();
-     animation.render(0);
      console.log(animation);
-     console.log(animation.toCSS({
+     var css = animation.toCSS({
        'vendors': ['webkit', 'mozilla']
-     }));
+       ,'granularity': 150
+     });
+
+     var style = document.createElement('style');
+     style.innerHTML = css;
+     document.head.appendChild(style);
 
     </script>
   </body>

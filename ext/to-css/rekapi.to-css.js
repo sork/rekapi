@@ -103,7 +103,7 @@
 
     for (i; i <= animLength; i += animLength / granularity) {
       actor.calculatePosition(i);
-      percent = ((i * granularity) / animLength);
+      percent = i / (animLength / 100);
       if (percent === 0) {
         stepPrefix = 'from ';
       } else if (percent === 100) {
