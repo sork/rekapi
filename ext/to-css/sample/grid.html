@@ -27,6 +27,8 @@
     </style>
   </head>
   <body>
+    <button id="btn-js">Play JavaScript animation</button>
+    <button id="btn-css">Play CSS3 animation</button>
     <ul id="animation-container" class="container"></ul>
     <script>
 
@@ -58,20 +60,32 @@
         child.classList.add(actor.getCSSName());
       }
 
-      animation.play(1);
+      var css = animation.toCSS({
+        'vendors': ['webkit', 'mozilla']
+      });
+      var style = document.createElement('style');
+      style.innerHTML = css;
 
-      animation.bind('onAnimationComplete', function () {
+      function runJSAnimation () {
+        if (document.head.contains(style)) {
+          document.head.removeChild(style);
+        }
+        animation.play(1);
+      }
+
+      function runCSSAnimation () {
+        animation.stop();
         _.each(children, function (child) {
           child.style.removeProperty('background');
         });
-
-        var css = animation.toCSS({
-          'vendors': ['webkit', 'mozilla']
-        });
-        var style = document.createElement('style');
-        style.innerHTML = css;
         document.head.appendChild(style);
-      });
+      }
+
+      // BUTTONS
+      var jsBtn = document.getElementById('btn-js');
+      var cssBtn = document.getElementById('btn-css');
+      jsBtn.addEventListener('click', runJSAnimation);
+      cssBtn.addEventListener('click', runCSSAnimation);
 
     </script>
   </body>
