@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>rekapi.toCSS();</title>
+    <script src="../../../lib/underscore/underscore.js"></script>
+    <script src="../../../lib/shifty/dist/shifty.js"></script>
+    <script src="../../../src/rekapi.core.js"></script>
+    <script src="../../../src/rekapi.actor.js"></script>
+    <script src="../../../src/rekapi.dom.js"></script>
+    <script src="../../../src/rekapi.keyframeprops.js"></script>
+    <script src="../../../src/rekapi.canvas.js"></script>
+    <script src="../rekapi.to-css.js"></script>
+    <style type="text/css">
+      .container {
+        padding: 0;
+        position: relative;
+        margin: 10px;
+      }
+      .actor {
+        border: solid 1px #000;
+        float: left;
+        height: 8px;
+        list-style: none;
+        margin: 0 2px 2px 0;
+        width: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="animation-container" class="container"></ul>
+    <script>
+
+      var container = document.getElementById('animation-container');
+
+      var animation = new Rekapi(container, {
+        'fps': 60
+        ,'height': 300
+        ,'width': 600
+      });
+
+      var child, actor, i = 0;
+      for (i; i < 240; i++) {
+        child = document.createElement('li');
+        child.classList.add('actor');
+        container.appendChild(child);
+        actor = new Kapi.DOMActor(child);
+        animation.addActor(actor);
+        actor
+          .keyframe(0, {
+            'background': '#fff'
+          }).keyframe(2000, {
+            'background': '#000'
+          }, {
+            'background': 'easeFrom'
+          });
+        child.style.position = '';
+      }
+
+      animation.play(1);
+
+      animation.bind('onAnimationComplete', function () {
+        var children = container.children;
+        _.each(children, function (child) {
+          //child.style.removeProperty('background');
+          child.style.background = '#f0f'
+        });
+      });
+
+      //var actorDiv = document.getElementById('actor-1');
+      //var actor = new Rekapi.DOMActor(actorDiv);
+      //animation.addActor(actor);
+
+      /*actor
+        .keyframe(500, {
+          'top': '0px'
+          ,'left': '0px'
+          ,'background': '#f00'
+        }).keyframe(3000, {
+          'top': '400px'
+          ,'left': '400px'
+          ,'background': '#00f'
+        }, {
+          'left': 'easeInOutQuart'
+          ,'top': 'swingTo'
+        });
+
+     var css = animation.toCSS({
+       'vendors': ['webkit', 'mozilla']
+       ,'granularity': 150
+     });
+
+     var style = document.createElement('style');
+     style.innerHTML = css;
+     document.head.appendChild(style);
+     actorDiv.classList.add(actor.getCSSName());*/
+
+    </script>
+  </body>
+</html>
