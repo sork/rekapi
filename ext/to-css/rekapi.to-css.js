@@ -85,12 +85,26 @@
   // UTILITY FUNCTIONS
   //
   /**
+   * @param {string} str
+   */
+  function isColorString (str) {
+    return /rgb/.test(str);
+  }
+
+
+  /**
    * @param {Rekapi.Actor} actor
    */
   function serializeActorStep (actor) {
     var serializedProps = ['{'];
+    var printVal;
     _.each(actor.get(), function (val, key) {
-      serializedProps.push(key + ':' + limitCSSPrecision(val, 2) + ';');
+      if (isColorString(val)) {
+        printVal = val;
+      } else {
+        printVal = limitCSSPrecision(val, 2);
+      }
+      serializedProps.push(key + ':' + printVal + ';');
     });
 
     serializedProps.push('}');
