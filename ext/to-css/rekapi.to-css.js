@@ -119,14 +119,14 @@
    */
   function generateActorKeyframes (actor, granularity) {
     var animLength = actor.getLength();
-    var i = delay = actor.getStart();
+    var i, delay = actor.getStart();
     var serializedFrames = [];
     var percent, stepPrefix;
     var increment = animLength / granularity;
     var animPercent = animLength / 100;
 
 
-    for (i; i <= animLength + delay; i += increment) {
+    for (i = delay; i <= animLength + delay; i += increment) {
       actor.calculatePosition(i);
       percent = (i - delay) / animPercent;
       if (percent === 0) {
