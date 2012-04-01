@@ -19,10 +19,10 @@
       .actor {
         border: solid 1px #000;
         float: left;
-        height: 8px;
+        height: 20px;
         list-style: none;
         margin: 0 2px 2px 0;
-        width: 8px;
+        width: 20px;
       }
     </style>
   </head>
@@ -38,10 +38,10 @@
         ,'width': 600
       });
 
-      var child, actor, i = 0;
-      for (i; i < 240; i++) {
+      var child, actor, i = 0, children = [];
+      for (i; i < 600; i++) {
         child = document.createElement('li');
-        child.classList.add('actor');
+        children.push(child);
         container.appendChild(child);
         actor = new Kapi.DOMActor(child);
         animation.addActor(actor);
@@ -53,46 +53,25 @@
           }, {
             'background': 'easeFrom'
           });
-        child.style.position = '';
+        child.style.position = 'relative';
+        child.classList.add('actor');
+        child.classList.add(actor.getCSSName());
       }
 
       animation.play(1);
 
       animation.bind('onAnimationComplete', function () {
-        var children = container.children;
         _.each(children, function (child) {
-          //child.style.removeProperty('background');
-          child.style.background = '#f0f'
+          child.style.removeProperty('background');
         });
+
+        var css = animation.toCSS({
+          'vendors': ['webkit', 'mozilla']
+        });
+        var style = document.createElement('style');
+        style.innerHTML = css;
+        document.head.appendChild(style);
       });
-
-      //var actorDiv = document.getElementById('actor-1');
-      //var actor = new Rekapi.DOMActor(actorDiv);
-      //animation.addActor(actor);
-
-      /*actor
-        .keyframe(500, {
-          'top': '0px'
-          ,'left': '0px'
-          ,'background': '#f00'
-        }).keyframe(3000, {
-          'top': '400px'
-          ,'left': '400px'
-          ,'background': '#00f'
-        }, {
-          'left': 'easeInOutQuart'
-          ,'top': 'swingTo'
-        });
-
-     var css = animation.toCSS({
-       'vendors': ['webkit', 'mozilla']
-       ,'granularity': 150
-     });
-
-     var style = document.createElement('style');
-     style.innerHTML = css;
-     document.head.appendChild(style);
-     actorDiv.classList.add(actor.getCSSName());*/
 
     </script>
   </body>
