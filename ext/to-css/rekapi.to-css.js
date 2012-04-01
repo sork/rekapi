@@ -96,7 +96,7 @@
    * @return {string}
    */
   function generateActorKeyframes (actor, granularity) {
-    var animLength = actor.kapi.animationLength();
+    var animLength = actor.getLength();
     var i = 0;
     var serializedFrames = [];
     var percent, stepPrefix;
@@ -167,9 +167,7 @@
    */
   function generateCSSVendorAttributes (actor, vendor) {
     var generatedAttributes = [];
-    var startTime = actor.getStart();
-    var endTime = actor.getEnd();
-    var duration = endTime - startTime;
+    var duration = actor.getLength();
 
     var duration = printf('  %sanimation-duration: %sms;'
         ,[VENDOR_PREFIXES[vendor], duration]);
