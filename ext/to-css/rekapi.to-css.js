@@ -100,10 +100,12 @@
     var i = 0;
     var serializedFrames = [];
     var percent, stepPrefix;
+    var increment = animLength / granularity;
+    var animPercent = animLength / 100;
 
-    for (i; i <= animLength; i += animLength / granularity) {
+    for (i; i <= animLength; i += increment) {
       actor.calculatePosition(i);
-      percent = i / (animLength / 100);
+      percent = i / animPercent;
       if (percent === 0) {
         stepPrefix = 'from ';
       } else if (percent === 100) {
