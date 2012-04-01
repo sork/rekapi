@@ -185,6 +185,9 @@
     var delay = printf('  %sanimation-delay: %sms;', [prefix, start]);
     generatedAttributes.push(delay);
 
+    var fillMode = printf('  %sanimation-fill-mode: forwards;', [prefix]);
+    generatedAttributes.push(fillMode);
+
     return generatedAttributes.join('\n');
   }
 
